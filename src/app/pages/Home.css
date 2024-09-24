@@ -1,60 +1,56 @@
 .Home {
+    padding: 1rem 3rem;
     height: 100dvh;
     width: 100%;
     background: black;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-}
-
-.Home .card {
-    border-radius: 8px;
-    /* padding: 1rem; */
-    gap: 1rem;
-    height: 300px;
-    width: 350px;
-    background: linear-gradient(145deg, #1c1f26, #242830, #0d0f16);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.Home .card .back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-    /* box-shadow: inset 10px 10px 40px 40px #DBA632; */
-}
-
-.Home .card .back .cardBackImg {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.Home .card .content {
-    border-radius: 6px;
-    height: 100%;
-    width: 100%;
-    padding: 1rem;
-    gap: 1rem;
-    /* background: rgba(7, 7, 7, 0.116); */
-    backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    position: relative;
-    z-index: 3;
     color: white;
+}
+
+.Home .head {
+    font-size: 2rem;
     font-weight: 400;
+}
+
+.Home .container {
+    align-self: center;
+    height: max-content;
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.Home .container .svgContainer {
+    align-self: center;
+    height: max-content;
+    width: max-content;
+}
+
+.Home .container .searchInp {
+    width: 250px;
+    padding: 0 1rem;
+    height: 7dvh;
     font-size: 1rem;
+    font-weight: 400;
+    outline: none;
+    border: .5px solid rgb(51, 51, 51);
+    border-radius: 6px;
+    background: rgb(29, 29, 29);
+    color: white;
+}
+
+.Home .container .searchInp:focus,
+.Home .container .searchInp:focus-visible,
+.Home .container .searchInp:focus-within {
+    background: rgb(29, 29, 29);
+}
+
+.Home .container .searchInp::placeholder {
+    color: white;
 }
