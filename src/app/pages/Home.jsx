@@ -36,7 +36,7 @@ const Home = () => {
                 windSpeed: data.wind.speed,
                 SVG: svg
             });
-            console.log(weatherData)
+            console.log(data)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
