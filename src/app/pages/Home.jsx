@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
-import { cloudClear, cloudDbl, cloudRainy, cloudThunder } from '@/public/assets/SVG';
+import { cloudClear, cloudDbl, cloudHaze, cloudRainy, cloudSnow, cloudSun, cloudThunder } from '@/public/assets/SVG';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const Home = () => {
     const [city, setCity] = useState('Mumbai');
@@ -12,6 +14,80 @@ const Home = () => {
     const getWeatherData = async () => {
         try {
             const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+            const fetchPromise = fetch(apiUrl).then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            });
+
+            const data = await toast.promise(fetchPromise, {
+                pending: "Getting the data...",
+                success: "Got the data!",
+                error: "Error fetching data"
+            });
+
+            // Process the fetched data
+            if (data && data.weather && data.weather[0] && data.main) {
+                const mainWeather = data.weather[0].main;
+
+                let svg = null;
+
+                switch (mainWeather) {
+                    case "Clear":
+                        svg = cloudClear;
+                        break;
+                    case "Few clouds":
+                        svg = cloudSun;
+                        break;
+                    case "Clouds":
+                    case "Broken clouds":
+                    case "Overcast clouds":
+                        svg = cloudDbl;
+                        break;
+                    case "Rain":
+                    case "Drizzle":
+                        svg = cloudRainy;
+                        break;
+                    case "Thunderstorm":
+                        svg = cloudThunder;
+                        break;
+                    case "Snow":
+                    case "Sleet":
+                        svg = cloudSnow;
+                        break;
+                    case "Haze":
+                    case "Mist":
+                    case "Fog":
+                        svg = cloudHaze;
+                        break;
+                    default:
+                        svg = cloudClear;
+                }
+
+                setWeatherData({
+                    weatherDescription: data.weather[0].main,
+                    temperatureCelsius: kelvinToCelsius(data.main.temp),
+                    lon: data.coord.lon,
+                    lat: data.coord.lat,
+                    cloud: data.clouds.all,
+                    sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
+                    sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
+                    windSpeed: data.wind.speed,
+                    SVG: svg
+                });
+            } else {
+                console.log('Incomplete data received from API');
+            }
+        } catch (error) {
+            console.error('Error fetching weather data:', error);
+        }
+    };
+
+    const getForecastData = async () => {
+        try {
+            const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`;
             const response = await fetch(apiUrl);
 
             if (!response.ok) {
@@ -19,35 +95,16 @@ const Home = () => {
             }
 
             const data = await response.json();
-            let svg = null;
+            console.log("Forcast : ", data);
 
-            const mainWeather = data.weather[0].main;
-
-            // Use the correct SVG based on weather condition
-            if (mainWeather === "Rain") svg = cloudRainy;
-            if (mainWeather === "Clouds") svg = cloudDbl;
-            if (mainWeather === "Clear") svg = cloudClear;
-            if (mainWeather === "Haze") svg = cloudThunder;
-
-            setWeatherData({
-                weatherDescription: data.weather[0].description,
-                temperatureCelsius: kelvinToCelsius(data.main.temp),
-                lon: data.coord.lon,
-                lat: data.coord.lat,
-                cloud: data.clouds.all,
-                sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
-                sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
-                windSpeed: data.wind.speed,
-                SVG: svg || cloudClear,
-            });
-            console.log(data);
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching forecast data:', error);
         }
     };
 
     useEffect(() => {
-        getWeatherData(); // Fetch data for default city on component mount
+        getWeatherData();
+        getForecastData();
     }, []);
 
     const handleInputChange = (e) => {
@@ -56,12 +113,12 @@ const Home = () => {
 
     return (
         <div className="Home">
+            <ToastContainer />
             <h1 className="head">WeatherPulse {'>>'}</h1>
-            <div className="svgContainer">
-                {/* Ensure that SVG is rendered correctly */}
-                {weatherData && weatherData.SVG && <div>{weatherData.SVG}</div>}
-            </div>
             <div className="container">
+                <div className="svgContainer">
+                    {weatherData && weatherData.SVG && <div>{weatherData.SVG}</div>}
+                </div>
                 <input
                     type="text"
                     value={city}
@@ -73,24 +130,21 @@ const Home = () => {
                 <button className="change-weather" onClick={getWeatherData}>
                     Get Weather
                 </button>
-            </div>
-
-            {weatherData && (
-                <div className="weather-card">
-                    <div className="top">
-                        <h3 className="info city">Location: {city}</h3>
-                        <h3 className="info weather">Weather: {weatherData.weatherDescription}</h3>
-                        <h3 className="info lat">Latitude: {weatherData.lat}</h3>
-                        <h3 className="info lon">Longitude: {weatherData.lon}</h3>
-                        <h3 className="info temp">Temp: {weatherData.temperatureCelsius.toFixed(2)} °C</h3>
-                        <h3 className="info cloud">Clouds: {weatherData.cloud}</h3>
-                        <h3 className="info sunrise">Sunrise: {weatherData.sunrise}</h3>
-                        <h3 className="info sunset">Sunset: {weatherData.sunset}</h3>
-                        <h3 className="info win-speed">Wind Speed: {weatherData.windSpeed}</h3>
-                    </div>
-                    <h2 className="degree">{weatherData.temperatureCelsius.toFixed(2)} °C</h2>
+                <div className="data">
+                    {weatherData ? (
+                        <>
+                            <h3 className="info location">Location: {city}</h3>
+                            <h3 className="info weather">Weather: {weatherData.weatherDescription}</h3>
+                            <h3 className="info temp">Temperature: {weatherData.temperatureCelsius.toFixed(2)}°C</h3>
+                            <h3 className="info wSpeed">Wind Speed: {weatherData.windSpeed} m/s</h3>
+                            <h3 className="info clouds">Clouds: {weatherData.cloud}%</h3>
+                            <h3 className="info sunRise">Sunrise: {weatherData.sunrise}</h3>
+                        </>
+                    ) : (
+                        ''
+                    )}
                 </div>
-            )}
+            </div>
         </div>
     );
 };
