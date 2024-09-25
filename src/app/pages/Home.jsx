@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import './Home.css'
-import { cloudClear, cloudDbl, cloudRainy } from '@/public/assets/SVG';
+import React, { useState, useEffect } from 'react';
+import './Home.css';
+import { cloudClear, cloudDbl, cloudRainy, cloudThunder } from '@/public/assets/SVG';
 
 const Home = () => {
     const [city, setCity] = useState('Mumbai');
     const [weatherData, setWeatherData] = useState(null);
     const apiKey = '31220df36ed1919c236077b084f981cb';
 
-    const kelvinToCelsius = kelvin => kelvin - 273.15;
+    const kelvinToCelsius = (kelvin) => kelvin - 273.15;
 
     const getWeatherData = async () => {
         try {
@@ -19,11 +19,15 @@ const Home = () => {
             }
 
             const data = await response.json();
-            var svg = '';
+            let svg = null;
 
-            if (data.weather.main === "Rain") svg = cloudRainy;
-            if (data.weather.main === "Clouds") svg = cloudDbl;
-            if (data.weather.main === "Clear") svg = cloudClear;
+            const mainWeather = data.weather[0].main;
+
+            // Use the correct SVG based on weather condition
+            if (mainWeather === "Rain") svg = cloudRainy;
+            if (mainWeather === "Clouds") svg = cloudDbl;
+            if (mainWeather === "Clear") svg = cloudClear;
+            if (mainWeather === "Haze") svg = cloudThunder;
 
             setWeatherData({
                 weatherDescription: data.weather[0].description,
@@ -34,13 +38,17 @@ const Home = () => {
                 sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
                 sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
                 windSpeed: data.wind.speed,
-                SVG: svg
+                SVG: svg || cloudClear,
             });
-            console.log(data)
+            console.log(data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+
+    useEffect(() => {
+        getWeatherData(); // Fetch data for default city on component mount
+    }, []);
 
     const handleInputChange = (e) => {
         setCity(e.target.value);
@@ -49,6 +57,10 @@ const Home = () => {
     return (
         <div className="Home">
             <h1 className="head">WeatherPulse {'>>'}</h1>
+            <div className="svgContainer">
+                {/* Ensure that SVG is rendered correctly */}
+                {weatherData && weatherData.SVG && <div>{weatherData.SVG}</div>}
+            </div>
             <div className="container">
                 <input
                     type="text"
@@ -63,7 +75,7 @@ const Home = () => {
                 </button>
             </div>
 
-            {/* {weatherData && (
+            {weatherData && (
                 <div className="weather-card">
                     <div className="top">
                         <h3 className="info city">Location: {city}</h3>
@@ -78,7 +90,7 @@ const Home = () => {
                     </div>
                     <h2 className="degree">{weatherData.temperatureCelsius.toFixed(2)} °C</h2>
                 </div>
-            )} */}
+            )}
         </div>
     );
 };
