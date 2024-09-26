@@ -8,3 +8,7 @@
     box-sizing: border-box;
     /* outline: .5px solid white; */
 }
+
+body::-webkit-scrollbar{
+    display: none;
+}

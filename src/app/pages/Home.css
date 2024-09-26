@@ -79,6 +79,9 @@
 }
 
 .Home .container .data h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: flex;
     align-items: center;
     justify-content: flex-start;
