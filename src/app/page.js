@@ -4,7 +4,7 @@ import Home from './pages/Home'
 
 const page = () => {
   return (
-    <main>
+    <main style={{ background: 'black', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <Home />
     </main>
   )

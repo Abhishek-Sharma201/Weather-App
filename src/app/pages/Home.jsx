@@ -4,6 +4,7 @@ import { cloudClear, cloudDbl, cloudHaze, cloudRainy, cloudSnow, cloudSun, cloud
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Forcasts from './Forcasts';
+import Footer from '../components/Footer';
 
 const Home = () => {
     const [city, setCity] = useState('Mumbai');
@@ -167,7 +168,7 @@ const Home = () => {
         <>
             <div className="Home">
                 <ToastContainer />
-                <h1 className="head">WeatherPulse {'>>'}</h1>
+                <h1 className="head">WeatherPulse<sup>{'>>'}</sup></h1>
                 <div className="container">
                     <div className="svgContainer">
                         {weatherData && weatherData.SVG && <div>{weatherData.SVG}</div>}
@@ -200,6 +201,7 @@ const Home = () => {
                 </div>
             </div>
             <Forcasts forecastData={forecastData} />
+            <Footer />
         </>
     );
 };

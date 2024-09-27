@@ -1,0 +1,49 @@
+.subscribeComponant {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: max-content;
+    height: max-content;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.subscribeComponant input,
+.subscribeComponant button {
+    border: none;
+    outline: none;
+    height: 6dvh;
+}
+
+.subscribeComponant button {
+    background: rgb(12, 12, 12);
+    border: .5px solid rgb(27, 27, 27);
+    color: white;
+    width: 6dvw;
+    font-size: small;
+    cursor: pointer;
+}
+
+.subscribeComponant input {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    color: rgba(24, 24, 24, 0.822);
+    /* text-align: center; */
+    font-size: .9rem;
+    font-weight: 500;
+    padding: 0 1rem;
+}
+
+.subscribeComponant input::placeholder {
+    color: rgb(19, 19, 19);
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .subscribeComponant input {
+        width: 35dvw;
+    }
+
+    .subscribeComponant button {
+        width: 20dvw;
+    }
+}
