@@ -19,12 +19,6 @@
     color: white;
 }
 
-.forcastCard .degree {
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: white;
-}
-
 .forcastCard .svgContainer {
     align-self: center;
 }
@@ -35,13 +29,24 @@
     fill: white;
 }
 
-.forcastCard .date {
+.forcastCard .wrap {
+    height: max-content;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.forcastCard .wrap .degree {
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: white;
+}
+
+.forcastCard .wrap .date {
     width: max-content;
     text-wrap: wrap;
     font-weight: 300;
     font-size: .9rem;
     color: white;
-    position: absolute;
-    bottom: 20px;
-    left: 65%;
 }

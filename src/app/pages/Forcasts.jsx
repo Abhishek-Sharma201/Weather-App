@@ -4,7 +4,7 @@ import Forcast from '../components/Forcast';
 
 const Forcasts = ({ forecastData }) => {
     if (!forecastData || forecastData.length === 0) {
-        return <p>No forecast data available</p>; // Handle empty data
+        return <p>No forecast data available</p>;
     }
 
     return (

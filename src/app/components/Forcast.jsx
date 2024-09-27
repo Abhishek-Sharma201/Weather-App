@@ -17,12 +17,14 @@ const Forcast = ({ data }) => {
                 <div className="svgContainer">
                     {SVG}
                 </div>
-                <h3 className="degree">
-                    {temperatureCelsius !== undefined
-                        ? `${temperatureCelsius.toFixed(2)}°C`
-                        : 'N/A'}
-                </h3>
-                <h3 className="date">{formattedDate}</h3>
+                <div className="wrap">
+                    <h3 className="degree">
+                        {temperatureCelsius !== undefined
+                            ? `${temperatureCelsius.toFixed(2)}°C`
+                            : 'N/A'}
+                    </h3>
+                    <h3 className="date">{formattedDate}</h3>
+                </div>
             </>
         </div>
     );
