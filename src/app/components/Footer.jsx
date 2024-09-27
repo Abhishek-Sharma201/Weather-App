@@ -10,12 +10,6 @@ const Footer = () => {
                     WeatherPulse<sup>{'>>'}</sup>
                 </div>
                 <div className='footerSection'>
-                    <a href='*'>Music Player</a>
-                    <a href='*'>Album App</a>
-                    <a href='*'>Gaming</a>
-                    <a href='*'>News App</a>
-                </div>
-                <div className='footerSection'>
                     <a href='*'>Abhishek</a>
                     <a href='*'>Rohan</a>
                     <a href='*'>Nayan</a>
@@ -23,9 +17,15 @@ const Footer = () => {
                     <a href='*'>Sujal</a>
                 </div>
                 <div className='footerSection'>
-                    <button className="feedback">Feedback</button>
+                    <a href='*'>Music Player</a>
+                    <a href='*'>Album App</a>
+                    <a href='*'>Gaming</a>
+                    <a href='*'>News App</a>
                 </div>
                 <div className='footerSection'>
+                    <button className="feedback">Feedback</button>
+                </div>
+                <div className='footerSection subs'>
                     <Subscribe />
                 </div>
             </div>

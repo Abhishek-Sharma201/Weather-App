@@ -6,7 +6,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* outline: .5px solid white; */
+    outline: .5px solid white;
 }
 
 body::-webkit-scrollbar{
