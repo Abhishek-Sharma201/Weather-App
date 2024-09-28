@@ -45,6 +45,7 @@ footer .footerSections .footerSection.subs {
 }
 
 footer .footerSections .footerSection .feedback {
+    transition: all .3s;
     height: 6dvh;
     width: max-content;
     padding: 0 1rem;
@@ -55,10 +56,19 @@ footer .footerSections .footerSection .feedback {
     outline: none;
 }
 
+footer .footerSections .footerSection .feedback a:hover {
+    color: rgb(255, 255, 255);
+    letter-spacing: normal;
+}
+
 footer .footerSections .footerSection a {
     color: white;
     font-weight: 400;
     transition: all .2s;
+}
+
+footer .footerSections .footerSection .feedback:hover {
+    scale: 1.02;
 }
 
 footer .footerSections .footerSection a:hover {

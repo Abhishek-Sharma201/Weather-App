@@ -23,7 +23,7 @@ const Footer = () => {
                     <a href='*'>News App</a>
                 </div>
                 <div className='footerSection'>
-                    <button className="feedback">Feedback</button>
+                    <button className="feedback"><a href="/Feedback">Feedback</a></button>
                 </div>
                 <div className='footerSection subs'>
                     <Subscribe />
